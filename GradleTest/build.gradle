@@ -1,0 +1,33 @@
+// Dependencies to run this build script.
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.3+'
+    }
+}
+
+
+apply plugin: 'android'
+
+android {
+    buildToolsVersion '19'
+    compileSdkVersion 19
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+// This has to come after the android plugin has been applied.
+dependencies {
+    compile 'joda-time:joda-time:2.2'
+}
+
+// Wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
