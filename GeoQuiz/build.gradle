@@ -1,0 +1,26 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.6.3+'
+    }
+}
+
+apply plugin: 'android'
+
+android {
+    buildToolsVersion '19'
+    compileSdkVersion 19
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+// Wrapper
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.8'
+}
