@@ -55,12 +55,14 @@ public class CrimeFragment extends Fragment
 
         mTitleField.addTextChangedListener(new TextWatcher()
         {
-            public void onTextChanged(CharSequence c, int start, int before, int count)
+            public void onTextChanged(
+            CharSequence c, int start, int before, int count)
             {
                 mCrime.setTitle(c.toString());
             }
 
-            public void beforeTextChanged(CharSequence c, int start, int before, int count)
+            public void beforeTextChanged(
+            CharSequence c, int start, int before, int count)
             {
                 // Do nothing.
             }
