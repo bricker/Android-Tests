@@ -1,5 +1,6 @@
 package com.bryanricker.criminal_intent;
 
+import java.util.UUID;
 import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,19 +15,37 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.text.TextWatcher;
 import android.text.Editable;
 
+
 public class CrimeFragment extends Fragment
 {
+
+    public static final String EXTRA_CRIME_ID = "com.bryanricker.criminal_intent.crime_id";
 
     private Crime mCrime;
     private EditText mTitleField;
     private Button mDateButton;
     private CheckBox mSolvedCheckBox;
 
+
+    public static CrimeFragment newInstance(UUID crimeId)
+    {
+        Bundle args = new Bundle();
+        args.putSerializable(EXTRA_CRIME_ID, crimeId);
+
+        CrimeFragment fragment = new CrimeFragment();
+        fragment.setArguments(args);
+
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        mCrime = new Crime();
+
+        UUID crimeId = (UUID)getArguments().getSerializable(EXTRA_CRIME_ID);
+        mCrime = CrimeLab.get(getActivity()).getCrime(crimeId);
     }
 
 
@@ -39,6 +58,9 @@ public class CrimeFragment extends Fragment
         mTitleField     = (EditText)v.findViewById(R.id.crime_title_edit_text);
         mDateButton     = (Button)v.findViewById(R.id.crime_date_button);
         mSolvedCheckBox = (CheckBox)v.findViewById(R.id.crime_solved_check_box);
+
+        mTitleField.setText(mCrime.getTitle());
+        mSolvedCheckBox.setChecked(mCrime.isSolved());
 
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM d, yyyy");
         mDateButton.setText(sdf.format(mCrime.getDate()));
