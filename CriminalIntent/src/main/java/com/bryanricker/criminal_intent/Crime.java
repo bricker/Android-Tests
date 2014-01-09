@@ -1,8 +1,8 @@
 
 package com.bryanricker.criminal_intent;
 
-import java.util.UUID;
 import java.util.Date;
+import java.util.UUID;
 
 
 public class Crime

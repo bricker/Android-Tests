@@ -1,8 +1,10 @@
 package com.bryanricker.criminal_intent;
 
-import java.util.UUID;
-import java.util.ArrayList;
 import android.content.Context;
+
+import java.util.ArrayList;
+import java.util.UUID;
+
 
 public class CrimeLab
 {

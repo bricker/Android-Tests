@@ -1,19 +1,20 @@
 package com.bryanricker.criminal_intent;
 
-import java.util.UUID;
-import java.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.LayoutInflater;
-import android.widget.EditText;
-import android.widget.CheckBox;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.text.TextWatcher;
-import android.text.Editable;
+import android.widget.EditText;
+
+import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 
 public class CrimeFragment extends Fragment
