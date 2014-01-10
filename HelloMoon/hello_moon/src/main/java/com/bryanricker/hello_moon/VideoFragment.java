@@ -1,5 +1,6 @@
 package com.bryanricker.hello_moon;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,14 @@ public class VideoFragment extends Fragment
 
 
     @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.fragment_video, parent, false);
@@ -30,6 +39,14 @@ public class VideoFragment extends Fragment
 
         mVideo.setVideoURI(Uri.parse(
             "android.resource://com.bryanricker.hello_moon/raw/apollo_17_stroll"));
+
+        mVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
+        {
+            public void onCompletion(MediaPlayer mp)
+            {
+                mVideo.stopPlayback();
+            }
+        });
 
         mPlayButton.setOnClickListener(new View.OnClickListener()
         {

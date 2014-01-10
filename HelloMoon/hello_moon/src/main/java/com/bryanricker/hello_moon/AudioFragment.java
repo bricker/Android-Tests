@@ -14,6 +14,17 @@ public class AudioFragment extends Fragment
     private Button mPlayButton;
     private Button mPauseButton;
     private Button mStopButton;
+    private boolean mIsPaused = false;
+    private boolean mIsPlaying = false;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
@@ -24,13 +35,19 @@ public class AudioFragment extends Fragment
         mStopButton = (Button)v.findViewById(R.id.hellomoon_audio_stop_Button);
         mPauseButton = (Button)v.findViewById(R.id.hellomoon_audio_pause_Button);
 
+        togglePauseButtonText();
+        setPauseButtonIsVisible(mIsPlaying || mIsPaused);
+
         mPlayButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
                 mPlayer.play(AudioFragment.this.getActivity(), R.raw.one_small_step);
+                mIsPlaying = true;
+                mIsPaused = false;
+
                 togglePauseButtonText();
-                mPauseButton.setVisibility(View.VISIBLE);
+                setPauseButtonIsVisible(true);
             }
         });
 
@@ -38,7 +55,17 @@ public class AudioFragment extends Fragment
         {
             public void onClick(View v)
             {
-                mPlayer.toggle();
+                if (mIsPlaying)
+                {
+                    mPlayer.pause();
+                    mIsPlaying = false;
+                    mIsPaused = true;
+                } else {
+                    mPlayer.start();
+                    mIsPlaying = true;
+                    mIsPaused = false;
+                }
+
                 togglePauseButtonText();
             }
         });
@@ -48,7 +75,10 @@ public class AudioFragment extends Fragment
             public void onClick(View v)
             {
                 mPlayer.stop();
-                mPauseButton.setVisibility(View.GONE);
+                mIsPlaying = false;
+                mIsPaused = false;
+
+                setPauseButtonIsVisible(false);
             }
         });
 
@@ -58,11 +88,22 @@ public class AudioFragment extends Fragment
 
     private void togglePauseButtonText()
     {
-        if (mPlayer.isPlaying())
+        if (mIsPlaying)
         {
             mPauseButton.setText(R.string.hellomoon_pause);
         } else {
             mPauseButton.setText(R.string.hellomoon_resume);
+        }
+    }
+
+
+    private void setPauseButtonIsVisible(boolean isVisible)
+    {
+        if (isVisible)
+        {
+            mPauseButton.setVisibility(View.VISIBLE);
+        } else {
+            mPauseButton.setVisibility(View.GONE);
         }
     }
 

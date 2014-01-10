@@ -1,21 +1,22 @@
 package com.bryanricker.hello_moon;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 
 public class AudioPlayer
 {
 
-    private android.media.MediaPlayer mPlayer;
+    private MediaPlayer mPlayer;
 
 
     public void play(Context c, int mediaId)
     {
         stop();
 
-        mPlayer = android.media.MediaPlayer.create(c, mediaId);
-        mPlayer.setOnCompletionListener(new android.media.MediaPlayer.OnCompletionListener()
+        mPlayer = MediaPlayer.create(c, mediaId);
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener()
         {
-            public void onCompletion(android.media.MediaPlayer mp)
+            public void onCompletion(MediaPlayer mp)
             {
                 stop();
             }
@@ -25,20 +26,15 @@ public class AudioPlayer
     }
 
 
-    public void toggle()
+    public void pause()
     {
-        if (mPlayer.isPlaying())
-        {
-            mPlayer.pause();
-        } else {
-            mPlayer.start();
-        }
+        if (mPlayer != null) mPlayer.pause();
     }
 
 
-    public boolean isPlaying()
+    public void start()
     {
-        return mPlayer.isPlaying();
+        if (mPlayer != null) mPlayer.start();
     }
 
 
