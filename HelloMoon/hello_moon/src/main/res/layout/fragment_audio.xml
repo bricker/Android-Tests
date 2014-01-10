@@ -16,20 +16,20 @@
         android:layout_weight="0">
 
         <Button
-            android:id="@+id/hellomoon_play_Button"
+            android:id="@+id/hellomoon_audio_play_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hellomoon_play" />
 
         <Button
-            android:id="@+id/hellomoon_pause_Button"
+            android:id="@+id/hellomoon_audio_pause_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:text="@string/hellomoon_pause" />
 
         <Button
-            android:id="@+id/hellomoon_stop_Button"
+            android:id="@+id/hellomoon_audio_stop_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hellomoon_stop" />

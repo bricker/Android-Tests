@@ -1,34 +1,41 @@
 package com.bryanricker.hello_moon;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.VideoView;
 
-public class HelloMoonFragment extends Fragment
+public class VideoFragment extends Fragment
 {
 
-    private AudioPlayer mPlayer = new AudioPlayer();
     private Button mPlayButton;
     private Button mPauseButton;
     private Button mStopButton;
+    private VideoView mVideo;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState)
     {
-        View v = inflater.inflate(R.layout.fragment_hello_moon, parent, false);
+        View v = inflater.inflate(R.layout.fragment_video, parent, false);
 
-        mPlayButton = (Button)v.findViewById(R.id.hellomoon_play_Button);
-        mStopButton = (Button)v.findViewById(R.id.hellomoon_stop_Button);
-        mPauseButton = (Button)v.findViewById(R.id.hellomoon_pause_Button);
+        mPlayButton = (Button)v.findViewById(R.id.hellomoon_video_play_Button);
+        mStopButton = (Button)v.findViewById(R.id.hellomoon_video_stop_Button);
+        mPauseButton = (Button)v.findViewById(R.id.hellomoon_video_pause_Button);
+        mVideo = (VideoView)v.findViewById(R.id.hellomoon_video_VideoView);
+
+        mVideo.setVideoURI(Uri.parse(
+            "android.resource://com.bryanricker.hello_moon/raw/apollo_17_stroll"));
 
         mPlayButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                mPlayer.play(getActivity());
+                mVideo.start();
                 togglePauseButtonText();
                 mPauseButton.setVisibility(View.VISIBLE);
             }
@@ -38,7 +45,13 @@ public class HelloMoonFragment extends Fragment
         {
             public void onClick(View v)
             {
-                mPlayer.toggle();
+                if (mVideo.isPlaying())
+                {
+                    mVideo.pause();
+                } else {
+                    mVideo.resume();
+                }
+
                 togglePauseButtonText();
             }
         });
@@ -47,7 +60,7 @@ public class HelloMoonFragment extends Fragment
         {
             public void onClick(View v)
             {
-                mPlayer.stop();
+                mVideo.stopPlayback();
                 mPauseButton.setVisibility(View.GONE);
             }
         });
@@ -58,7 +71,7 @@ public class HelloMoonFragment extends Fragment
 
     private void togglePauseButtonText()
     {
-        if (mPlayer.isPlaying())
+        if (mVideo.isPlaying())
         {
             mPauseButton.setText(R.string.hellomoon_pause);
         } else {
@@ -71,7 +84,7 @@ public class HelloMoonFragment extends Fragment
     public void onDestroy()
     {
         super.onDestroy();
-        mPlayer.stop();
+        mVideo.stopPlayback();
     }
 
 }

@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-            android:name="com.bryanricker.hello_moon.HelloMoonActivity"
+            android:name=".HelloMoonPagerActivity"
             android:label="@string/app_name" >
 
             <intent-filter>
