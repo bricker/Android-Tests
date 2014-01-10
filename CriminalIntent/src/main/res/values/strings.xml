@@ -13,4 +13,13 @@
     <string name="date_time_chooser_title">What are you editing?</string>
     <string name="date_time_chooser_date">Edit Date</string>
     <string name="date_time_chooser_time">Edit Time</string>
+
+    <string name="new_crime">New Crime</string>
+    <string name="show_subtitle">Show Subtitle</string>
+    <string name="hide_subtitle">Hide Subtitle</string>
+    <string name="subtitle">If you see something, say something.</string>
+    <string name="delete_crime">Delete Crime</string>
+
+    <string name="empty_crimes">There are no crimes yet.</string>
+    <string name="empty_crimes_button">Add a Crime</string>
 </resources>
