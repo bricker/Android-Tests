@@ -8,24 +8,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
-import android.widget.DatePicker;
+import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class DatePickerFragment extends DialogFragment
+public class TimePickerFragment extends DialogFragment
 {
 
     private Date mDate;
 
-
-    public static DatePickerFragment newInstance(Date date)
+    public static TimePickerFragment newInstance(Date mDate)
     {
         Bundle args = new Bundle();
-        args.putSerializable(DateTimeChooserFragment.EXTRA_DATE, date);
+        args.putSerializable(DateTimeChooserFragment.EXTRA_DATE, mDate);
 
-        DatePickerFragment fragment = new DatePickerFragment();
+        TimePickerFragment fragment = new TimePickerFragment();
         fragment.setArguments(args);
 
         return fragment;
@@ -40,22 +39,25 @@ public class DatePickerFragment extends DialogFragment
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(mDate);
 
-        int existingYear  = calendar.get(Calendar.YEAR);
-        int existingMonth = calendar.get(Calendar.MONTH);
-        int existingDay   = calendar.get(Calendar.DAY_OF_MONTH);
+        int existingHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int existingMinute = calendar.get(Calendar.MINUTE);
 
-        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_date, null);
+        View v = getActivity().getLayoutInflater().inflate(R.layout.dialog_time, null);
 
-        DatePicker datePicker = (DatePicker)v.findViewById(R.id.dialog_date_datePicker);
-        datePicker.init(existingYear, existingMonth, existingDay, new DatePicker.OnDateChangedListener()
+        TimePicker timePicker = (TimePicker)v.findViewById(R.id.dialog_time_TimePicker);
+        timePicker.setCurrentHour(existingHour);
+        timePicker.setCurrentMinute(existingMinute);
+
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener()
         {
-            public void onDateChanged(DatePicker view, int year, int month, int day)
+            public void onTimeChanged(TimePicker view, int hour, int minute)
             {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(mDate);
 
-                int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                int minute = calendar.get(Calendar.MINUTE);
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
 
                 mDate = new GregorianCalendar(year, month, day, hour, minute).getTime();
                 getArguments().putSerializable(DateTimeChooserFragment.EXTRA_DATE, mDate);
@@ -64,21 +66,18 @@ public class DatePickerFragment extends DialogFragment
 
         return new AlertDialog.Builder(getActivity())
             .setView(v)
-            .setTitle(R.string.date_picker_title)
+            .setTitle(R.string.time_picker_title)
             .setPositiveButton(
                 android.R.string.ok,
-                new DialogInterface.OnClickListener()
-                {
+                new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which)
-                    {
+                    public void onClick(DialogInterface dialog, int which) {
                         sendResult(Activity.RESULT_OK);
                     }
                 }
-            )
+           )
             .create();
     }
-
 
     private void sendResult(int resultCode)
     {

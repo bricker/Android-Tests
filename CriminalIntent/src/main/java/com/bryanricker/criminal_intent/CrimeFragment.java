@@ -25,8 +25,8 @@ public class CrimeFragment extends Fragment
 {
 
     public static final String EXTRA_CRIME_ID = "com.bryanricker.criminal_intent.crime_id";
-    public static final String DIALOG_DATE = "date";
-    private static final int REQUEST_DATE = 0;
+    public static final String DIALOG_DATE_TIME_CHOOSER = "date_time_chooser";
+    public static final int REQUEST_DATE = 0;
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -69,17 +69,15 @@ public class CrimeFragment extends Fragment
         mTitleField.setText(mCrime.getTitle());
         mSolvedCheckBox.setChecked(mCrime.isSolved());
 
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM d, yyyy");
-        mDateButton.setText(sdf.format(mCrime.getDate()));
-
+        updateDate();
         mDateButton.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
                 FragmentManager fm = getActivity().getSupportFragmentManager();
-                DatePickerFragment dialog = DatePickerFragment.newInstance(mCrime.getDate());
+                DateTimeChooserFragment dialog = DateTimeChooserFragment.newInstance(mCrime.getDate());
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
-                dialog.show(fm, DIALOG_DATE);
+                dialog.show(fm, DIALOG_DATE_TIME_CHOOSER);
             }
         });
 
@@ -123,9 +121,17 @@ public class CrimeFragment extends Fragment
 
         if (requestCode == REQUEST_DATE)
         {
-            Date date = (Date)data.getSerializableExtra(DatePickerFragment.EXTRA_DATE);
+            Date date = (Date)data.getSerializableExtra(DateTimeChooserFragment.EXTRA_DATE);
             mCrime.setDate(date);
-            mDateButton.setText(mCrime.getDate.toString());
+            updateDate();
         }
     }
+
+
+    private void updateDate()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM d, yyyy, HH:mm:ss");
+        mDateButton.setText(sdf.format(mCrime.getDate()));
+    }
+
 }
