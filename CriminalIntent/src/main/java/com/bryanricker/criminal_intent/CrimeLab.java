@@ -9,15 +9,24 @@ import java.util.UUID;
 public class CrimeLab
 {
 
+    private static final String FILENAME = "crimes.json";
     private static CrimeLab sCrimeLab;
+
     private Context mAppContext;
     private ArrayList<Crime> mCrimes;
-
+    private CriminalIntentJSONSerializer mSerializer;
 
     private CrimeLab(Context appContext)
     {
         mAppContext = appContext;
-        mCrimes = new ArrayList<Crime>();
+        mSerializer = new CriminalIntentJSONSerializer(mAppContext, FILENAME);
+
+        try
+        {
+            mCrimes = mSerializer.loadCrimes();
+        } catch (Exception e) {
+            mCrimes = new ArrayList<Crime>();
+        }
     }
 
 
@@ -31,6 +40,17 @@ public class CrimeLab
         return sCrimeLab;
     }
 
+
+    public boolean saveCrimes()
+    {
+        try
+        {
+            mSerializer.saveCrimes(mCrimes);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
     public ArrayList<Crime> getCrimes()
     {
@@ -56,4 +76,10 @@ public class CrimeLab
     {
         mCrimes.add(c);
     }
+
+    public void deleteCrime(Crime c)
+    {
+        mCrimes.remove(c);
+    }
+
 }
